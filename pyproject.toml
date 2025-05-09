@@ -1,0 +1,10 @@
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cls-reg-roi-retrieval"
+version = "0.1.0"
+description = "Reference implementation of CLS+Register+ROI retrieval"
+requires-python = ">=3.9"

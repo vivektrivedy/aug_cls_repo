@@ -1,0 +1,6 @@
+torch>=2.2.0              # CUDA build recommended
+torchvision>=0.17.0
+timm>=0.9.16              # provides DINOv2-reg backbone
+faiss-gpu>=1.8.0          # optional – brute-force search otherwise
+einops>=0.7.0             # tidy tensor reshaping
+pillow
