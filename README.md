@@ -1,7 +1,7 @@
 CLS + Register + ROI — Vision-Transformer Multi-vector Retrieval
 ==============================================================
 
-This repository contains a **research-grade re-implementation** of the paper Augmenting the CLS Token with Region of Interest Tokens for Efficient Multi-Vector Image Retrieval.
+This repository contains an implementation of the paper Augmenting the CLS Token with Region of Interest Tokens for Efficient Multi-Vector Image Retrieval.
 
 All vectors are **indexed in Weaviate** and every training / evaluation job is launched on **Modal GPU containers** (A10G by default).
 
@@ -62,10 +62,24 @@ my-data/
     ├── class_c/  ...
     └── class_d/  ...
 
-## 5 · Troubleshooting
+## 5 · Training + Evaluation
+modal run cls-reg-roi-retrieval.train \
+     --data-s3-uri s3://my-dataset/imagenet-format
+
+modal run cls-reg-roi-retrieval.evaluate
+
+
+## 6 · Troubleshooting
 | Symptom                         | Likely cause                                               | Fix                  |
 | ------------------------------- | ---------------------------------------------------------- | -------------------- |
 | `SecretNotFoundError` on deploy | secret typo                                                | `modal secret list`  |
 | Weaviate 403                    | wrong API key scope                                        | regenerate key       |
 | CUDA OOM on A10G                | batch too large                                            | lower `batch_size`   |
 | Empty Recall values             | train/test overlap or wrong class name in `WEAVIATE_CLASS` | verify dataset & env |
+
+## 7 Configurations
+You can tweak the parameters as follows, this is what we recommend in order:
+roi_side (odd)	side length of square ROI pool
+batch_size	adjust to GPU RAM (A10G ≈ 24 GB)
+steps	optimisation steps (× --epochs)
+lr, weight_decay, margin	training hyper-parameters
